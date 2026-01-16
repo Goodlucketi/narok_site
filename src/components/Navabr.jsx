@@ -100,7 +100,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden text-2xl text-primary"
+            className="md:hidden p-2 text-2xl text-primary"
             aria-label="Open menu"
           >
             <FaBars />
