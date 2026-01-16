@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+#services{
+    background: linear-gradient(rgba(247, 247, 255, 0.5), rgba(220, 245, 254, 0.6)), url('../src/assets/bg5.jpg') no-repeat fixed;
+    background-size: cover;
+}
+
+#team{
+    background: linear-gradient(rgba(0, 0, 19, 0.166), rgba(1, 1, 43, 0.337)), url('../src/assets/bg6.jpg') no-repeat fixed;
+    background-size: cover;
+}
