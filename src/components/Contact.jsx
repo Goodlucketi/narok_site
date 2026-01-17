@@ -22,7 +22,7 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const whatsappNumber = "2348137180348";
+    const whatsappNumber = "+2349066600060";
     const text = `Hello Narok Electrical,%0A
 Name: ${formData.name}%0A
 Email: ${formData.email}%0A
@@ -114,7 +114,7 @@ Message: ${formData.message}`;
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-3 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+                className="w-full flex items-center justify-center gap-3 bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
               >
                 Submit
               </button>
@@ -139,7 +139,7 @@ Message: ${formData.message}`;
               <iframe
                 title="Narok Electrical Akwa Ibom Location"
                 src="https://www.google.com/maps?q=34+Uyo+Road+Nung+Udoe+Ibesikpo+Asutan+Akwa+Ibom&output=embed"
-                className="w-full h-full pointer-events-none"
+                className="w-full h-full pointer-events-none p-2"
                 loading="lazy"
               ></iframe>
               <span className="absolute bottom-4 right-4 bg-black/70 text-white text-sm px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition">
@@ -148,7 +148,7 @@ Message: ${formData.message}`;
             </a>
 
             {/* Address & Contact */}
-            <div className="bg-white rounded-xl shadow p-6 space-y-4 text-blue-900">
+            <div className="bg-white rounded-xl shadow p-8 space-y-4 text-blue-900">
               <div className="flex items-center gap-4 ">
                 <FaMapMarkerAlt />
                 <span>
