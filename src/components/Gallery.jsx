@@ -1,41 +1,39 @@
 import { motion } from "framer-motion";
-import img1 from "../assets/gallery/gallery1.jpg"
-import img2 from "../assets/gallery/gallery2.jpg"
-import img3 from "../assets/gallery/gallery3.jpg"
-import img4 from "../assets/gallery/gallery4.jpg"
-import img5 from "../assets/gallery/gallery5.jpg"
-import img6 from "../assets/gallery/gallery6.jpg"
-import img7 from "../assets/gallery/gallery7.jpg"
-import img8 from "../assets/gallery/gallery8.jpg"
-import img9 from "../assets/gallery/gallery9.jpg"
-import img10 from "../assets/gallery/gallery10.jpg"
-import img11 from "../assets/gallery/gallery11.jpg"
-import img12 from "../assets/gallery/gallery12.jpg"
-import img13 from "../assets/gallery/gallery13.jpg"
-import img14 from "../assets/gallery/gallery14.jpg"
-import img15 from "../assets/gallery/gallery15.jpg"
-import img16 from "../assets/gallery/gallery16.jpg"
-import img17 from "../assets/gallery/gallery17.jpg"
-import img18 from "../assets/gallery/gallery18.jpg"
-import img19 from "../assets/gallery/gallery19.jpg"
-import img20 from "../assets/gallery/gallery20.jpg"
-import img21 from "../assets/gallery/gallery21.jpg"
-import img22 from "../assets/gallery/gallery22.jpg"
-
+import img1 from "../assets/gallery/gallery1.jpg";
+import img2 from "../assets/gallery/gallery2.jpg";
+import img3 from "../assets/gallery/gallery3.jpg";
+import img4 from "../assets/gallery/gallery4.jpg";
+import img5 from "../assets/gallery/gallery5.jpg";
+import img6 from "../assets/gallery/gallery6.jpg";
+import img7 from "../assets/gallery/gallery7.jpg";
+import img8 from "../assets/gallery/gallery8.jpg";
+import img9 from "../assets/gallery/gallery9.jpg";
+import img10 from "../assets/gallery/gallery10.jpg";
+import img11 from "../assets/gallery/gallery11.jpg";
+import img12 from "../assets/gallery/gallery12.jpg";
+import img13 from "../assets/gallery/gallery13.jpg";
+import img14 from "../assets/gallery/gallery14.jpg";
+import img15 from "../assets/gallery/gallery15.jpg";
+import img16 from "../assets/gallery/gallery16.jpg";
+import img17 from "../assets/gallery/gallery17.jpg";
+import img18 from "../assets/gallery/gallery18.jpg";
+import img19 from "../assets/gallery/gallery19.jpg";
+import img20 from "../assets/gallery/gallery20.jpg";
+import img21 from "../assets/gallery/gallery21.jpg";
+import img22 from "../assets/gallery/gallery22.jpg";
 
 const rowOneImages = [
-  img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,
+  img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
 ];
 
 const rowTwoImages = [
-  img12,img13,img14,img15,img16,img17,img18,img19,img20,img21,img22,
+  img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22,
 ];
 
 const Gallery = () => {
   return (
     <section id="gallery" className="py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -52,13 +50,15 @@ const Gallery = () => {
           </p>
         </motion.div>
 
-
         {/* Sliders */}
         <div className="space-y-8">
-
-          {/* Row 1 → */}
+          {/* Row 1 → seamless */}
           <div className="relative w-full overflow-hidden">
-            <div className="flex gap-4 animate-slide-left">
+            <motion.div
+              className="flex gap-4 w-max"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+            >
               {[...rowOneImages, ...rowOneImages].map((img, i) => (
                 <img
                   key={i}
@@ -67,12 +67,16 @@ const Gallery = () => {
                   className="h-56 w-80 object-cover rounded-xl shadow-md flex-shrink-0"
                 />
               ))}
-            </div>
+            </motion.div>
           </div>
 
-          {/* Row 2 ← */}
+          {/* Row 2 ← seamless */}
           <div className="relative w-full overflow-hidden">
-            <div className="flex gap-4 animate-slide-right">
+            <motion.div
+              className="flex gap-4 w-max"
+              animate={{ x: ["-50%", "0%"] }}
+              transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+            >
               {[...rowTwoImages, ...rowTwoImages].map((img, i) => (
                 <img
                   key={i}
@@ -81,9 +85,8 @@ const Gallery = () => {
                   className="h-56 w-80 object-cover rounded-xl shadow-md flex-shrink-0"
                 />
               ))}
-            </div>
+            </motion.div>
           </div>
-
         </div>
       </div>
     </section>
