@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 import img1 from "../assets/gallery/gallery1.jpg";
 import img2 from "../assets/gallery/gallery2.jpg";
 import img3 from "../assets/gallery/gallery3.jpg";
@@ -31,6 +32,22 @@ const rowTwoImages = [
 ];
 
 const Gallery = () => {
+  const controlsRow1 = useAnimation();
+  const controlsRow2 = useAnimation();
+
+  useEffect(() => {
+    // Start animations on mount
+    controlsRow1.start({
+      x: ["0%", "-50%"],
+      transition: { repeat: Infinity, duration: 70, ease: "linear" },
+    });
+
+    controlsRow2.start({
+      x: ["-50%", "0%"],
+      transition: { repeat: Infinity, duration: 70, ease: "linear" },
+    });
+  }, [controlsRow1, controlsRow2]);
+
   return (
     <section id="gallery" className="py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -52,12 +69,18 @@ const Gallery = () => {
 
         {/* Sliders */}
         <div className="space-y-8">
-          {/* Row 1 → seamless */}
+          {/* Row 1 → */}
           <div className="relative w-full overflow-hidden">
             <motion.div
-              className="flex gap-4 w-max"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
+              className="flex gap-4 w-max cursor-pointer"
+              animate={controlsRow1}
+              onHoverStart={() => controlsRow1.stop()}
+              onHoverEnd={() =>
+                controlsRow1.start({
+                  x: ["0%", "-50%"],
+                  transition: { repeat: Infinity, duration: 70, ease: "linear" },
+                })
+              }
             >
               {[...rowOneImages, ...rowOneImages].map((img, i) => (
                 <img
@@ -70,12 +93,18 @@ const Gallery = () => {
             </motion.div>
           </div>
 
-          {/* Row 2 ← seamless */}
+          {/* Row 2 ← */}
           <div className="relative w-full overflow-hidden">
             <motion.div
-              className="flex gap-4 w-max"
-              animate={{ x: ["-50%", "0%"] }}
-              transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
+              className="flex gap-4 w-max cursor-pointer"
+              animate={controlsRow2}
+              onHoverStart={() => controlsRow2.stop()}
+              onHoverEnd={() =>
+                controlsRow2.start({
+                  x: ["-50%", "0%"],
+                  transition: { repeat: Infinity, duration: 70, ease: "linear" },
+                })
+              }
             >
               {[...rowTwoImages, ...rowTwoImages].map((img, i) => (
                 <img
