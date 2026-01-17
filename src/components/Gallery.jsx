@@ -57,7 +57,7 @@ const Gallery = () => {
             <motion.div
               className="flex gap-4 w-max"
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+              transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
             >
               {[...rowOneImages, ...rowOneImages].map((img, i) => (
                 <img
@@ -75,7 +75,7 @@ const Gallery = () => {
             <motion.div
               className="flex gap-4 w-max"
               animate={{ x: ["-50%", "0%"] }}
-              transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+              transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
             >
               {[...rowTwoImages, ...rowTwoImages].map((img, i) => (
                 <img
