@@ -52,12 +52,13 @@ const Gallery = () => {
           </p>
         </motion.div>
 
+
         {/* Sliders */}
         <div className="space-y-8">
 
           {/* Row 1 → */}
           <div className="relative w-full overflow-hidden">
-            <div className="flex gap-6 animate-slide-left">
+            <div className="flex gap-4 animate-slide-left">
               {[...rowOneImages, ...rowOneImages].map((img, i) => (
                 <img
                   key={i}
@@ -71,7 +72,7 @@ const Gallery = () => {
 
           {/* Row 2 ← */}
           <div className="relative w-full overflow-hidden">
-            <div className="flex gap-6 animate-slide-right">
+            <div className="flex gap-4 animate-slide-right">
               {[...rowTwoImages, ...rowTwoImages].map((img, i) => (
                 <img
                   key={i}

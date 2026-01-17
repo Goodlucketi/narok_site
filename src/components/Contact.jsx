@@ -59,8 +59,8 @@ Message: ${formData.message}`;
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <h2 className="text-3xl font-bold text-gray-900">
-            Electrical Services in Akwa Ibom State
+          <h2 className="text-3xl font-bold text-blue-900">
+            Contact Narok Electrical Services
           </h2>
           <p className="mt-3 text-gray-600 max-w-xl mx-auto">
             Visit or contact Narok Electrical at Nung Udoe, Ibesikpo Asutan for
@@ -79,7 +79,7 @@ Message: ${formData.message}`;
             viewport={{ once: true }}
             className="bg-white rounded-xl shadow-lg p-8"
           >
-            <form className="space-y-8 p-3" onSubmit={handleSubmit}>
+            <form className="space-y-8 md:p-3" onSubmit={handleSubmit}>
               <input
                 type="text"
                 name="name"
@@ -148,19 +148,19 @@ Message: ${formData.message}`;
             </a>
 
             {/* Address & Contact */}
-            <div className="bg-white rounded-xl shadow p-6 space-y-4">
-              <div className="flex items-center gap-4">
-                <FaMapMarkerAlt className="text-accent" />
+            <div className="bg-white rounded-xl shadow p-6 space-y-4 text-blue-900">
+              <div className="flex items-center gap-4 ">
+                <FaMapMarkerAlt />
                 <span>
                   #34 Uyo Road, Nung Udoe, Ibesikpo Asutan, Akwa Ibom State
                 </span>
               </div>
               <div className="flex items-center gap-4">
-                <FaPhoneAlt className="text-accent" />
+                <FaPhoneAlt />
                 <span>+234 813 718 0348</span>
               </div>
               <div className="flex items-center gap-4">
-                <FaEnvelope className="text-accent" />
+                <FaEnvelope />
                 <span>info@narokelectrical.com</span>
               </div>
             </div>

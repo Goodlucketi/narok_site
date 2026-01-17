@@ -21,7 +21,7 @@ const team = [
     },
   },
   {
-    name: "Mr. Samuel Edem",
+    name: "Mr. Samuel Oduene",
     role: "Site Supervisor",
     image: "/images/team/supervisor.jpg",
     socials: {
@@ -45,7 +45,7 @@ const Team = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Meet Our <span className="text-accent">Leadership</span>
+            Meet Our <span className="text-accent">Team</span>
           </h2>
           <p className="mt-3 text-gray-200 max-w-xl mx-auto">
             The professionals guiding every successful project.
