@@ -9,7 +9,7 @@ import {
   FaPaperPlane,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import logo from "../assets/Logo/narok-logo.png"
+import logo from "../assets/Logo/narok_logo.png"
 
 
 const Footer = () => {

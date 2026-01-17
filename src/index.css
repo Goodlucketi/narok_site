@@ -14,6 +14,10 @@ html {
     background: linear-gradient(rgba(0, 0, 19, 0.166), rgba(1, 1, 43, 0.337)), url('../src/assets/bg6.jpg') no-repeat fixed;
     background-size: cover;
 }
+#gallery{
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.569)), url('../src/assets/bg7.jpg') no-repeat fixed;
+    background-size: cover;
+}
 
 #footer{
     background: linear-gradient(rgba(0, 0, 19, 0.166), rgba(1, 1, 43, 0.337)), url('../src/assets/bg6.jpg') no-repeat fixed;
