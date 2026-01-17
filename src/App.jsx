@@ -8,6 +8,8 @@ import WhatsAppCTA from "./components/CTA"
 import Team from "./components/Team"
 import FAQs from "./components/FAQ"
 import Gallery from "./components/Gallery"
+import Contact from "./components/Contact"
+import BackToTop from "./components/BackToTop"
 
 
 function App() {
@@ -20,9 +22,11 @@ function App() {
       <Services />
       <WhyChooseUs />
       <WhatsAppCTA />
+      <BackToTop />
       <Team />
       <FAQs />
       <Gallery />
+      <Contact />
       <Footer />
     </>
   )
