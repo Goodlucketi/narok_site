@@ -1,11 +1,7 @@
 import { motion } from "framer-motion";
-import {
-  FaPhoneAlt,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +11,8 @@ const Contact = () => {
     message: "",
   });
 
+  const [status, setStatus] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -22,17 +20,22 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const whatsappNumber = "+2349066600060";
-    const text = `Hello Narok Electrical,%0A
-Name: ${formData.name}%0A
-Email: ${formData.email}%0A
-Phone: ${formData.phone}%0A
-Message: ${formData.message}`;
-
-    window.open(
-      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`,
-      "_blank"
-    );
+    emailjs
+      .send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        formData,
+        "YOUR_PUBLIC_KEY"
+      )
+      .then(
+        () => {
+          setStatus("Message sent successfully!");
+          setFormData({ name: "", email: "", phone: "", message: "" });
+        },
+        () => {
+          setStatus("Something went wrong. Please try again.");
+        }
+      );
   };
 
   return (
@@ -42,7 +45,7 @@ Message: ${formData.message}`;
       itemScope
       itemType="https://schema.org/LocalBusiness"
     >
-      {/* Local SEO Schema */}
+      {/* Local SEO */}
       <meta itemProp="name" content="Narok Electrical" />
       <meta
         itemProp="address"
@@ -51,6 +54,7 @@ Message: ${formData.message}`;
       <meta itemProp="telephone" content="+2348137180348" />
 
       <div className="max-w-7xl mx-auto">
+
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,19 +63,17 @@ Message: ${formData.message}`;
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <h2 className="text-3xl font-bold text-blue-900">
-            Contact Narok Electrical Services
+          <h2 className="text-3xl font-bold text-gray-900">
+            Contact Narok Electrical
           </h2>
           <p className="mt-3 text-gray-600 max-w-xl mx-auto">
-            Visit or contact Narok Electrical at Nung Udoe, Ibesikpo Asutan for
-            professional electrical installations, CCTV systems, and
-            maintenance services.
+            Send us a message and we’ll respond promptly.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-12">
 
-          {/* WhatsApp Form */}
+          {/* Email Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -79,12 +81,13 @@ Message: ${formData.message}`;
             viewport={{ once: true }}
             className="bg-white rounded-xl shadow-lg p-8"
           >
-            <form className="space-y-8 md:p-3" onSubmit={handleSubmit}>
+            <form className="space-y-5" onSubmit={handleSubmit}>
               <input
                 type="text"
                 name="name"
                 placeholder="Full Name"
                 required
+                value={formData.name}
                 onChange={handleChange}
                 className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-accent"
               />
@@ -93,6 +96,7 @@ Message: ${formData.message}`;
                 name="email"
                 placeholder="Email Address"
                 required
+                value={formData.email}
                 onChange={handleChange}
                 className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-accent"
               />
@@ -100,24 +104,32 @@ Message: ${formData.message}`;
                 type="tel"
                 name="phone"
                 placeholder="Phone Number"
+                value={formData.phone}
                 onChange={handleChange}
                 className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-accent"
               />
               <textarea
                 name="message"
                 rows="4"
-                placeholder="Describe your project"
+                placeholder="Your Message"
                 required
+                value={formData.message}
                 onChange={handleChange}
                 className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-accent"
               ></textarea>
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-3 bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                className="w-full bg-accent text-white py-3 rounded-lg font-semibold hover:bg-accent/90 transition"
               >
-                Submit
+                Send Message
               </button>
+
+              {status && (
+                <p className="text-sm text-center text-green-600 mt-3">
+                  {status}
+                </p>
+              )}
             </form>
           </motion.div>
 
@@ -129,42 +141,36 @@ Message: ${formData.message}`;
             viewport={{ once: true }}
             className="space-y-6"
           >
-            {/* Clickable Map */}
             <a
               href="https://www.google.com/maps/search/?api=1&query=34+Uyo+Road+Nung+Udoe+Ibesikpo+Asutan+Akwa+Ibom"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full h-[350px] rounded-xl overflow-hidden shadow-lg relative group"
+              className="block w-full h-[350px] rounded-xl overflow-hidden shadow-lg"
             >
               <iframe
-                title="Narok Electrical Akwa Ibom Location"
+                title="Narok Electrical Location"
                 src="https://www.google.com/maps?q=34+Uyo+Road+Nung+Udoe+Ibesikpo+Asutan+Akwa+Ibom&output=embed"
-                className="w-full h-full pointer-events-none p-2"
+                className="w-full h-full pointer-events-none"
                 loading="lazy"
               ></iframe>
-              <span className="absolute bottom-4 right-4 bg-black/70 text-white text-sm px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition">
-                Open in Google Maps
-              </span>
             </a>
 
-            {/* Address & Contact */}
-            <div className="bg-white rounded-xl shadow p-8 space-y-4 text-blue-900">
-              <div className="flex items-center gap-4 ">
-                <FaMapMarkerAlt />
-                <span>
-                  #34 Uyo Road, Nung Udoe, Ibesikpo Asutan, Akwa Ibom State
-                </span>
+            <div className="bg-white rounded-xl shadow p-6 space-y-4">
+              <div className="flex items-center gap-4">
+                <FaMapMarkerAlt className="text-accent" />
+                <span>#34 Uyo Road, Nung Udoe, Ibesikpo Asutan</span>
               </div>
               <div className="flex items-center gap-4">
-                <FaPhoneAlt />
+                <FaPhoneAlt className="text-accent" />
                 <span>+234 813 718 0348</span>
               </div>
               <div className="flex items-center gap-4">
-                <FaEnvelope />
+                <FaEnvelope className="text-accent" />
                 <span>info@narokelectrical.com</span>
               </div>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

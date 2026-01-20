@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import ceo from "../assets/Narok-CEO.jpg"
+import manager from "../assets/Narok-manager.jpg"
 
 const team = [
   {
     name: "Mr. Nsidibe Bassey",
     role: "Director",
-    image: "/images/team/director.jpg",
+    image: ceo,
     socials: {
       whatsapp: "https://wa.me/2348137180348",
       linkedin: "#",
@@ -14,9 +16,9 @@ const team = [
   {
     name: "Mr. Nsikak Edem",
     role: "Operations Manager",
-    image: "/images/team/manager.jpg",
+    image: manager,
     socials: {
-      whatsapp: "https://wa.me/2348137180348",
+      whatsapp: "https://wa.me/2347062714861",
       linkedin: "#",
     },
   },
@@ -68,7 +70,7 @@ const Team = () => {
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="h-full w-full object-cover group-hover:scale-110 transition"
+                  className="h-full w-full object-cover object-top group-hover:scale-110 transition"
                 />
 
                 {/* Hover overlay */}
