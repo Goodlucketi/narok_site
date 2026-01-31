@@ -36,7 +36,9 @@ jobs:
           git fetch origin deploy
           git checkout deploy
 
-          git rm -rf .
+           if [ "$(ls -A .)" ]; then
+            git rm -rf .
+          fi
           cp -r dist/* .
 
           git add .
