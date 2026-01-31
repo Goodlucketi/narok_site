@@ -3,46 +3,61 @@ name: Build and Deploy Vite App
 on:
   push:
     branches:
-      - main
+      - main  # Trigger workflow on push to main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+      # 1️⃣ Checkout the repository
+      - name: Checkout repo
         uses: actions/checkout@v4
-        with: 
-          fetch-depth: 0 
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          fetch-depth: 0  # fetch all branches
 
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build Vite app
+      # 4️⃣ Build the Vite app
+      - name: Build
         run: npm run build
 
+      # 5️⃣ Deploy to deploy branch
       - name: Deploy to deploy branch
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Your PAT token here
         run: |
+          # Configure git
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
+          # Discard any local changes (package-lock.json, etc.)
           git reset --hard
 
+          # Fetch deploy branch; create it if it doesn't exist
           git fetch origin deploy
-          git checkout deploy
+          git checkout deploy || git checkout -b deploy
 
-          git rm -rf . || echo "No files to remove"
+          # Remove all tracked files safely (works even if empty)
+          git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
+
+          # Copy build output to branch
           cp -r dist/* .
 
+          # Add and commit changes
           git add .
           git commit -m "Deploy build" || echo "No changes to commit"
 
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          # Set remote using PAT for authentication
           git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
+
+          # Push changes to deploy branch
           git push origin deploy --force
