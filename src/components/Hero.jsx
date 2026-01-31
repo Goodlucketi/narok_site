@@ -69,14 +69,14 @@ const Hero = () => {
               <div className="mt-6 flex gap-4">
                 <a
                   href="#contact"
-                  className="bg-accent px-6 py-3 rounded font-semibold border border-white"
+                  className="bg-accent px-6 py-3 rounded font-semibold border border-white hover:bg-white hover:text-blue-700 transition-all duration-500"
                 >
                   {slides[index].cta}
                 </a>
 
                 <a
                   href="https://wa.me/+2348137180348"
-                  className="border border-white px-6 py-3 rounded font-semibold"
+                  className="border border-white px-6 py-3 rounded font-semibold hover:bg-white hover:text-blue-700 transition-all duration-500"
                 >
                   WhatsApp Us
                 </a>
