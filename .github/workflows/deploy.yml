@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout source code
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # fetch all branches
+          fetch-depth: 0  # Important to get all branches
 
       # 2️⃣ Setup Node.js
       - name: Setup Node.js
@@ -33,31 +33,29 @@ jobs:
       # 5️⃣ Deploy to deploy branch
       - name: Deploy to deploy branch
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Your PAT token here
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the working token
         run: |
           # Configure git
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-          # Discard any local changes (package-lock.json, etc.)
+          # Reset any local changes from build
           git reset --hard
 
-          # Fetch deploy branch; create it if it doesn't exist
+          # Fetch deploy branch and switch (create if missing)
           git fetch origin deploy
           git checkout deploy || git checkout -b deploy
 
-          # Remove all tracked files safely (works even if empty)
+          # Remove old tracked files safely
           git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
 
-          # Copy build output to branch
+          # Copy built files
           cp -r dist/* .
 
-          # Add and commit changes
+          # Commit changes (skip if nothing changed)
           git add .
           git commit -m "Deploy build" || echo "No changes to commit"
 
-          # Set remote using PAT for authentication
+          # Use PAT for push
           git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
-
-          # Push changes to deploy branch
           git push origin deploy --force
