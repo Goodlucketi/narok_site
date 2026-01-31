@@ -33,9 +33,10 @@ jobs:
 
           git fetch origin deploy
           git checkout deploy
+
           git rm -rf .
           cp -r dist/* .
 
           git add .
-          git commit -m "Deploy build"
+          git commit -m "Deploy build" || echo "No changes to commit"
           git push origin deploy --force
