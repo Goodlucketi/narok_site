@@ -1,61 +1,48 @@
-name: Deploy Vite App to deploy branch
+name: Build and Deploy Vite App
 
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to main
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    # 1️⃣ Checkout the repo
-    - name: Checkout source
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # fetch all branches, needed for deploy
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0 
 
-    # 2️⃣ Set up Node.js
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-    # 3️⃣ Install dependencies
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm install
 
-    # 4️⃣ Build the Vite app
-    - name: Build Vite app
-      run: npm run build
+      - name: Build Vite app
+        run: npm run build
 
-    # 5️⃣ Deploy to deploy branch
-    - name: Deploy to deploy branch
-      env:
-        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-      run: |
-        # Configure git
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
+      - name: Deploy to deploy branch
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
 
-        # Discard any changes from npm install/build
-        git reset --hard
+          git reset --hard
 
-        # Fetch deploy branch and switch to it
-        git fetch origin deploy
-        git checkout deploy || git checkout -b deploy
+          git fetch origin deploy
+          git checkout deploy
 
-        # Remove all tracked files (safe even if branch is empty)
-        git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
+          git rm -rf . || echo "No files to remove"
+          cp -r dist/* .
 
-        # Copy build output to branch
-        cp -r dist/* .
+          git add .
+          git commit -m "Deploy build" || echo "No changes to commit"
 
-        # Commit and push
-        git add .
-        git commit -m "Deploy build" || echo "No changes to commit"
-
-        # Use PAT token to push
-        git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
-        git push origin deploy --force
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
+          git push origin deploy --force
