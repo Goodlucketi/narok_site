@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout main branch
+      # 1️⃣ Checkout main
       - name: Checkout main
         uses: actions/checkout@v4
         with:
@@ -27,12 +27,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Build Vite app
+      # 4️⃣ Build
       - name: Build
         run: npm run build
 
-      # 5️⃣ Deploy build to deploy branch
-      - name: Deploy to deploy branch
+      # 5️⃣ Preserve build output BEFORE switching branches
+      - name: Preserve build output
+        run: |
+          mkdir /tmp/deploy-build
+          cp -r dist/* /tmp/deploy-build/
+
+      # 6️⃣ Deploy to deploy branch
+      - name: Deploy
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
@@ -41,17 +47,15 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-          # Ensure deploy branch exists
           git fetch origin deploy || true
           git checkout deploy || git checkout --orphan deploy
 
-          # Remove everything except .git
+          # Clean deploy branch completely
           find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
-          # Copy build output
-          cp -r dist/* .
+          # Restore build output
+          cp -r /tmp/deploy-build/* .
 
-          # Commit and push
           git add .
           git commit -m "Deploy build" || echo "No changes to commit"
 
