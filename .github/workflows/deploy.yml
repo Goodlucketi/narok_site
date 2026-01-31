@@ -31,19 +31,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      # 5️⃣ Determine build folder
-      - name: Determine build folder
-        id: build_folder
+      - name: Debug build folder
         run: |
-          # Default is dist
-          if [ -d dist ]; then
-            echo "build_dir=dist" >> $GITHUB_OUTPUT
-          elif [ -d build ]; then
-            echo "build_dir=build" >> $GITHUB_OUTPUT
-          else
-            echo "No build folder found!" >&2
-            exit 1
-          fi
+          echo "Current directory:"
+          pwd
+          echo "Contents of repo root:"
+          ls -la
+          echo "Checking for dist folder:"
+          ls -la dist || echo "dist folder missing"
+          echo "Checking for build folder:"
+          ls -la build || echo "build folder missing"
+
 
       # 6️⃣ Deploy to deploy branch
       - name: Deploy to deploy branch
