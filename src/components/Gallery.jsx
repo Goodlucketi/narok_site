@@ -22,13 +22,29 @@ import img19 from "../assets/gallery/gallery19.jpg";
 import img20 from "../assets/gallery/gallery20.jpg";
 import img21 from "../assets/gallery/gallery21.jpg";
 import img22 from "../assets/gallery/gallery22.jpg";
+import img23 from "../assets/gallery/gallery23.jpg";
+import img24 from "../assets/gallery/gallery24.jpg";
+import img25 from "../assets/gallery/gallery25.jpg";
+import img26 from "../assets/gallery/gallery26.jpg";
+import img27 from "../assets/gallery/gallery27.jpg";
+import img28 from "../assets/gallery/gallery28.jpg";
+import img29 from "../assets/gallery/gallery29.jpg";
+import img30 from "../assets/gallery/gallery30.jpg";
+import img31 from "../assets/gallery/gallery31.jpg";
+import img32 from "../assets/gallery/gallery32.jpg";
+import img33 from "../assets/gallery/gallery33.jpg";
+import img34 from "../assets/gallery/gallery34.jpg";
+import img35 from "../assets/gallery/gallery35.jpg";
+import img36 from "../assets/gallery/gallery36.jpg";
+import img37 from "../assets/gallery/gallery37.jpg";
+import img38 from "../assets/gallery/gallery38.jpg";
 
 const rowOneImages = [
-  img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
+  img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img23, img24, img25, img26, img27, img28, img29, img30,
 ];
 
 const rowTwoImages = [
-  img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22,
+  img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img32, img33, img34, img35, img36, img37, img38, img31,
 ];
 
 const Gallery = () => {

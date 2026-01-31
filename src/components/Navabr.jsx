@@ -91,7 +91,7 @@ const Navbar = () => {
           {/* Desktop CTA */}
           <a
             href="tel:08137180348"
-            className="hidden md:flex items-center gap-2 bg-accent px-4 py-2 rounded font-semibold border rounded-md"
+            className="hidden md:flex items-center gap-2 bg-accent px-4 py-2 rounded font-semibold border rounded-md hover:bg-blue-700 hover:text-white transition-all duration-500"
           >
             <FaPhoneAlt />
             Call Now
