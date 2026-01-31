@@ -1,4 +1,4 @@
-name: Debug Vite Build Output
+name: Build and Deploy Vite App
 
 on:
   push:
@@ -6,64 +6,54 @@ on:
       - main
 
 jobs:
-  debug-build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
-      - name: Checkout repo
+      # 1️⃣ Checkout main branch
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      # 2️⃣ Node setup
+      # 2️⃣ Setup Node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3️⃣ Show repo structure BEFORE install
-      - name: Debug – repo structure (before install)
-        run: |
-          echo "PWD:"
-          pwd
-          echo "Root contents:"
-          ls -la
-
-      # 4️⃣ Install dependencies
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 5️⃣ Show repo structure AFTER install
-      - name: Debug – repo structure (after install)
-        run: |
-          echo "Root contents:"
-          ls -la
-
-      # 6️⃣ Run build
-      - name: Build Vite app
+      # 4️⃣ Build Vite app
+      - name: Build
         run: npm run build
 
-      # 7️⃣ DEBUG – locate build output
-      - name: Debug – locate build output
+      # 5️⃣ Deploy build to deploy branch
+      - name: Deploy to deploy branch
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          echo "========== AFTER BUILD =========="
-          echo "Root contents:"
-          ls -la
+          set -e
 
-          echo ""
-          echo "dist folder:"
-          ls -la dist || echo "❌ dist folder NOT found"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
 
-          echo ""
-          echo "build folder:"
-          ls -la build || echo "❌ build folder NOT found"
+          # Ensure deploy branch exists
+          git fetch origin deploy || true
+          git checkout deploy || git checkout --orphan deploy
 
-          echo ""
-          echo "Searching for index.html:"
-          find . -name index.html -type f
+          # Remove everything except .git
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
-          echo ""
-          echo "vite.config.js (if exists):"
-          cat vite.config.* || echo "No vite config found"
+          # Copy build output
+          cp -r dist/* .
+
+          # Commit and push
+          git add .
+          git commit -m "Deploy build" || echo "No changes to commit"
+
+          git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
+          git push origin deploy --force
