@@ -3,7 +3,7 @@ name: Build and Deploy Vite App
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to main
+      - main
 
 jobs:
   build-and-deploy:
@@ -14,7 +14,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Important to get all branches
+          fetch-depth: 0
+          persist-credentials: false  # Use PAT for push
 
       # 2️⃣ Setup Node.js
       - name: Setup Node.js
@@ -35,27 +36,19 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the working token
         run: |
-          # Configure git
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-          # Reset any local changes from build
           git reset --hard
 
-          # Fetch deploy branch and switch (create if missing)
           git fetch origin deploy
           git checkout deploy || git checkout -b deploy
 
-          # Remove old tracked files safely
           git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
-
-          # Copy built files
           cp -r dist/* .
 
-          # Commit changes (skip if nothing changed)
           git add .
           git commit -m "Deploy build" || echo "No changes to commit"
 
-          # Use PAT for push
           git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
           git push origin deploy --force
