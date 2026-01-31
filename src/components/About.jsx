@@ -19,6 +19,7 @@ const About = () => {
             src={hero4}
             alt="Narok Electrical team at work"
             className="rounded-xl shadow-lg w-full object-cover shadow-xl"
+            loading="lazy"
           />
           {/* <div className="absolute inset-0 rounded-xl ring-2 ring-accent/20" /> */}
         </motion.div>

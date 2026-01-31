@@ -71,6 +71,7 @@ const Team = () => {
                   src={member.image}
                   alt={member.name}
                   className="h-full w-full object-cover object-top group-hover:scale-110 transition"
+                  loading="lazy"
                 />
 
                 {/* Hover overlay */}

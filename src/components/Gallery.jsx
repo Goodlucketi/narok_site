@@ -104,6 +104,7 @@ const Gallery = () => {
                   src={img}
                   alt="Electrical project"
                   className="h-56 w-80 object-cover rounded-xl shadow-md flex-shrink-0"
+                  loading="lazy"
                 />
               ))}
             </motion.div>
