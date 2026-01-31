@@ -41,4 +41,8 @@ jobs:
 
           git add .
           git commit -m "Deploy build" || echo "No changes to commit"
+
+          git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
           git push origin deploy --force
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
