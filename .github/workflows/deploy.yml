@@ -1,28 +1,73 @@
-- name: Deploy to deploy branch
-  env:
-    PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-  run: |
-    git config --global user.name "github-actions"
-    git config --global user.email "github-actions@github.com"
+name: Build and Deploy Vite App
 
-    git reset --hard
-    git fetch origin deploy
-    git checkout deploy || git checkout -b deploy
+on:
+  push:
+    branches:
+      - main
 
-    # Remove old files
-    git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-    # Debug: confirm dist exists
-    echo "Listing current directory:"
-    ls -la
-    echo "Listing build folder:"
-    ls -la dist || echo "dist folder not found!"
+    steps:
+      # 1️⃣ Checkout the repo
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false  # Important to use PAT
 
-    # Copy build output (update folder if needed)
-    cp -r dist/* .
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-    git add .
-    git commit -m "Deploy build" || echo "No changes to commit"
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm ci
 
-    git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
-    git push origin deploy --force
+      # 4️⃣ Build Vite app
+      - name: Build
+        run: npm run build
+
+      # 5️⃣ Determine build folder
+      - name: Determine build folder
+        id: build_folder
+        run: |
+          # Default is dist
+          if [ -d dist ]; then
+            echo "build_dir=dist" >> $GITHUB_OUTPUT
+          elif [ -d build ]; then
+            echo "build_dir=build" >> $GITHUB_OUTPUT
+          else
+            echo "No build folder found!" >&2
+            exit 1
+          fi
+
+      # 6️⃣ Deploy to deploy branch
+      - name: Deploy to deploy branch
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git reset --hard
+          git fetch origin deploy
+          git checkout deploy || git checkout -b deploy
+
+          # Remove old files safely
+          git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
+
+          # Copy build output dynamically
+          BUILD_DIR="${{ steps.build_folder.outputs.build_dir }}"
+          echo "Copying files from $BUILD_DIR"
+          cp -r "$BUILD_DIR"/* .
+
+          git add .
+          git commit -m "Deploy build" || echo "No changes to commit"
+
+          # Use PAT for push
+          git remote set-url origin https://$PAT_TOKEN@github.com/Goodlucketi/narok_site.git
+          git push origin deploy --force
