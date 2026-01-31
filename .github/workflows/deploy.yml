@@ -31,6 +31,8 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
+          git reset --hard
+
           git fetch origin deploy
           git checkout deploy
 
