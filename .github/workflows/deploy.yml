@@ -36,9 +36,8 @@ jobs:
           git fetch origin deploy
           git checkout deploy
 
-           if [ "$(ls -A .)" ]; then
-            git rm -rf .
-          fi
+          git ls-files -z | xargs -0 git rm -f || echo "No files to remove"
+          
           cp -r dist/* .
 
           git add .
