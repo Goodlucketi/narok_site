@@ -44,8 +44,8 @@ jobs:
         run: |
           set -e
 
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "Goodlucketi"
+          git config --global user.email "goodlucketim94@gmail.com"
 
           git fetch origin deploy || true
           git checkout deploy || git checkout --orphan deploy
